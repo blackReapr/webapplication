@@ -58,4 +58,14 @@ public class StudentController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        Student? student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+        if (student == null) return NotFound();
+        _context.Students.Remove(student);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
 }
